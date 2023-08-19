@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Home Test</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<div class="form-container">
+    <h2>Simple User Form</h2>
+    <form action="/form_sample"  method="post" modelAttribute="user_data">
+        <div class="form-group">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name" name="name" class="form-input"  required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" class="form-input"  required>
+        </div>
+        <div>
+            <label for="country" class="form-label">Country:</label>
+            <input type="text" id="country" name="country" class="form-input" >
+            <ul id= "item-list">  </ul>
+        </div>
+        <button type="submit" class="form-button">Submit</button>
+    </form>
+</div>
+
+<script>
+//To call the api when the user enters a minimum of 2 characters
+    $(function() {
+        $("#country").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "/search",
+                    dataType: "json",
+                    data: {
+                        search_name: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2,
+        });
+    });
+</script>
+</body>
+</html>
