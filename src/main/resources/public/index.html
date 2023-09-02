@@ -42,7 +42,10 @@
                         search_name: request.term
                     },
                     success: function(data) {
-                        response(data);
+                        response(data.map(item => item.name));
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Status: Run the Server" );
                     }
                 });
             },

@@ -11,27 +11,24 @@ import java.util.*;
 @Controller
 public class SearchControler {
 
-
+    @Autowired
     private final CountryService countryService;
 
-    @Autowired
     public SearchControler(CountryService countryService) {
         this.countryService = countryService;
     }
 
+
+
     // The Api  uses the Get  method to obtain the countries name which contains with given  parm string and returns the List of countries
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<String> autocompleteSuggestions(@RequestParam("search_name") String search_name) {
+    public List<CountryDocument>  autocompleteSuggestions(@RequestParam("search_name") String search_name) {
       //  System.out.println("search_name: " + search_name);
 
         //obtaining the countries name
         List<CountryDocument> sample=countryService.getDocumentsContainingString(search_name);
-        List <String> final_list=new ArrayList<>();
-        for (CountryDocument countryDocument : sample) {
-            final_list.add(countryDocument.getName());
-        }
-        return final_list;
+        return sample;
 
         // The below code stores the names of the countries in Hashset and checks for contains
 
